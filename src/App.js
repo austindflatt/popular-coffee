@@ -19,13 +19,6 @@ export class App extends Component {
         ingredients: []
       }
     ],
-    icedCoffee: [
-      {
-        title: '',
-        description: '',
-        ingredients: []
-      }
-    ],
     search: '',
   }
 
