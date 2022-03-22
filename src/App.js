@@ -76,11 +76,11 @@ export class App extends Component {
         </div>
 
         <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} style={{ marginTop: '10px' }}>
-        {this.state.coffee.filter((title) => {
+        {this.state.coffee.filter((coffees) => {
           if(this.state.search === '') {
-            return title
-          } else if (title.title.toLowerCase().includes(this.state.search.toLowerCase())) {
-            return title
+            return coffees
+          } else if (coffees.title.toLowerCase().includes(this.state.search.toLowerCase())) {
+            return coffees
           }
         }).map(({ title, ingredients, description }, idx) => {
           return (
