@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import CoffeeCard from './components/Card'
-import SearchBar from './components/SearchBar'
 import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
-import { TextField, LinearProgress } from '@mui/material'
+import { TextField } from '@mui/material'
 
 let type = 'hot';
 
@@ -43,20 +42,15 @@ export class App extends Component {
     })
   }
 
-  handleSearch = () => {
-    return this.state.coffee.filter((item) => {
-      item.title.includes(this.state.search)
-    })
-  }
-
   render() {
     return (
       <>
       <CssBaseline />
       <Box m={2} pt={3}>
         <Container maxWidth="lg">
+
         <h1>Popular coffee drinks ☕</h1>
-        {/* <SearchBar /> */}
+
         <TextField
         fullWidth
         id="fullWidth"
@@ -68,25 +62,34 @@ export class App extends Component {
         })}
         style={{ marginBottom: 20, marginTop: 20 }}
         />
+
         <Stack spacing={2} direction="row">
           <Button
-          variant="outlined"
+          variant={type === 'hot' && "contained"}
           onClick={() => {type = 'hot'
           this.getCoffeeData()}}>
             Hot Drinks
           </Button>
           <Button
-          variant="outlined"
+          variant={type === 'iced' && "contained"}
           onClick={() => {type = 'iced'
           this.getCoffeeData()}}>
             Iced Drinks
           </Button>
         </Stack>
+
         <br />
         <div>
         </div>
+
         <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} style={{ marginTop: '10px' }}>
-        {this.state.coffee.map(({ title, ingredients, description }, idx) => {
+        {this.state.coffee.filter((title) => {
+          if(this.state.search === '') {
+            return title
+          } else if (title.title.toLowerCase().includes(this.state.search.toLowerCase())) {
+            return title
+          }
+        }).map(({ title, ingredients, description }, idx) => {
           return (
             <CoffeeCard
             key={idx}
@@ -97,6 +100,7 @@ export class App extends Component {
           )
         })}
         </Grid>
+
         </Container>
       </Box>
       </>
