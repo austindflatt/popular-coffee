@@ -7,6 +7,9 @@ import Container from '@mui/material/Container'
 import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
+import { TextField, LinearProgress } from '@mui/material'
+
+let type = 'hot';
 
 export class App extends Component {
   state = {
@@ -24,6 +27,7 @@ export class App extends Component {
         ingredients: []
       }
     ],
+    search: '',
   }
 
   componentDidMount = async () => {
@@ -31,7 +35,7 @@ export class App extends Component {
   }
 
   getCoffeeData = async () => {
-    const response = await fetch('https://api.sampleapis.com/coffee/hot');
+    const response = await fetch(`https://api.sampleapis.com/coffee/${type}`);
     const data = await response.json();
     console.log(data)
     this.setState({
@@ -39,24 +43,44 @@ export class App extends Component {
     })
   }
 
-  getIcedCoffeeData = async () => {
-    const response = await fetch('https://api.sampleapis.com/coffee/iced');
-    const data = await response.json();
-    console.log(data)
+  handleSearch = () => {
+    return this.state.coffee.filter((item) => {
+      item.title.includes(this.state.search)
+    })
   }
 
   render() {
-    const { title, description, ingredients } = this.state.coffee;
     return (
       <>
       <CssBaseline />
       <Box m={2} pt={3}>
         <Container maxWidth="lg">
         <h1>Popular coffee drinks ☕</h1>
-        <SearchBar />
+        {/* <SearchBar /> */}
+        <TextField
+        fullWidth
+        id="fullWidth"
+        color="primary"
+        label="Search for a coffee drink"
+        // value={null}
+        onChange={(e) => this.setState({
+          search: e.target.value
+        })}
+        style={{ marginBottom: 20, marginTop: 20 }}
+        />
         <Stack spacing={2} direction="row">
-          <Button variant="outlined">Hot Drinks</Button>
-          <Button variant="outlined">Iced Drinks</Button>
+          <Button
+          variant="outlined"
+          onClick={() => {type = 'hot'
+          this.getCoffeeData()}}>
+            Hot Drinks
+          </Button>
+          <Button
+          variant="outlined"
+          onClick={() => {type = 'iced'
+          this.getCoffeeData()}}>
+            Iced Drinks
+          </Button>
         </Stack>
         <br />
         <div>
@@ -73,7 +97,6 @@ export class App extends Component {
           )
         })}
         </Grid>
-        <button onClick={this.getIcedCoffeeData}>Click</button>
         </Container>
       </Box>
       </>

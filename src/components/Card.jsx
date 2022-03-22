@@ -9,9 +9,6 @@ const CoffeeCard = (props) => {
     <Grid item xs={8} sm={4} md={3}>
       <Card variant="outlined">
         <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          Hot Coffee
-        </Typography>
         <Typography variant="h5" component="div">
           {props.titleProp}
         </Typography>
