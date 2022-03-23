@@ -6,7 +6,7 @@ import Container from '@mui/material/Container'
 import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
-import { TextField } from '@mui/material'
+import { TextField, Pagination } from '@mui/material'
 
 let type = 'hot';
 
@@ -20,6 +20,7 @@ export class App extends Component {
       }
     ],
     search: '',
+    page: 1,
   }
 
   componentDidMount = async () => {
@@ -82,7 +83,9 @@ export class App extends Component {
           } else if (coffees.title.toLowerCase().includes(this.state.search.toLowerCase())) {
             return coffees
           }
-        }).map(({ title, ingredients, description }, idx) => {
+        })
+        .slice((this.state.page - 1) * 16, (this.state.page - 1) * 16 + 16)
+        .map(({ title, ingredients, description }, idx) => {
           return (
             <CoffeeCard
             key={idx}
@@ -93,6 +96,17 @@ export class App extends Component {
           )
         })}
         </Grid>
+
+        <Pagination
+        count={(this.state.coffee.length / 16).toFixed(0)}
+        onChange={(_, value) => {
+        this.setState({
+          page: value,
+        })
+        window.scroll(0, 450);
+        }}
+        style={{ padding: 20, width: '100%', display: 'flex', justifyContent: 'center' }}
+        />
 
         </Container>
       </Box>
