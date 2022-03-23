@@ -50,7 +50,6 @@ export class App extends Component {
         id="fullWidth"
         color="primary"
         label="Search for a coffee drink"
-        // value={null}
         onChange={(e) => this.setState({
           search: e.target.value
         })}

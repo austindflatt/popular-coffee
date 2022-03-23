@@ -13,7 +13,7 @@ const CoffeeCard = (props) => {
           {props.titleProp}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {props.ingredientsProp}
+          {props.ingredientsProp.join(', ')}
         </Typography>
         <Typography variant="body2">
           {props.descriptionProp}
